@@ -2,8 +2,11 @@ from django.db.models import Q
 from rest_framework import generics, permissions
 from rest_framework.exceptions import PermissionDenied
 
-from .models import LearningLevel, Lesson, VocabularyCategory, Word
-from .serializers import CategorySerializer, LearningLevelSerializer, LessonSerializer, WordSerializer
+from .models import LearningLevel, Lesson, Resource, ResourceCategory, VocabularyCategory, Word
+from .serializers import (
+    CategorySerializer, LearningLevelSerializer, LessonSerializer, ResourceCategorySerializer,
+    ResourceSerializer, WordSerializer,
+)
 
 
 class StaffOrAuthorWriteMixin:
@@ -60,7 +63,7 @@ class WordDetail(StaffOrAuthorWriteMixin, generics.RetrieveUpdateDestroyAPIView)
 
 
 class CategoryListCreate(StaffOrAuthorWriteMixin, generics.ListCreateAPIView):
-    queryset = VocabularyCategory.objects.filter(active=True)
+    queryset = VocabularyCategory.objects.filter(active=True).select_related('parent')
     serializer_class = CategorySerializer
 
 
@@ -93,3 +96,38 @@ class LessonListCreate(StaffOrAuthorWriteMixin, generics.ListCreateAPIView):
 class LessonDetail(StaffOrAuthorWriteMixin, generics.RetrieveUpdateDestroyAPIView):
     queryset = Lesson.objects.prefetch_related('words', 'lessonword_set__word').all()
     serializer_class = LessonSerializer
+
+
+class ResourceCategoryListCreate(StaffOrAuthorWriteMixin, generics.ListCreateAPIView):
+    serializer_class = ResourceCategorySerializer
+
+    def get_queryset(self):
+        return ResourceCategory.objects.filter(active=True)
+
+
+class ResourceCategoryDetail(StaffOrAuthorWriteMixin, generics.RetrieveUpdateDestroyAPIView):
+    queryset = ResourceCategory.objects.all()
+    serializer_class = ResourceCategorySerializer
+
+
+class ResourceListCreate(StaffOrAuthorWriteMixin, generics.ListCreateAPIView):
+    serializer_class = ResourceSerializer
+
+    def get_queryset(self):
+        qs = Resource.objects.select_related('category').filter(active=True, category__active=True)
+        category_id = self.request.query_params.get('category')
+        if category_id:
+            qs = qs.filter(category_id=category_id)
+        query = self.request.query_params.get('q', '').strip()
+        if query:
+            qs = qs.filter(Q(title__icontains=query) | Q(description__icontains=query) | Q(author__icontains=query))
+        return qs
+
+
+class ResourceDetail(StaffOrAuthorWriteMixin, generics.RetrieveUpdateDestroyAPIView):
+    queryset = Resource.objects.select_related('category').all()
+    serializer_class = ResourceSerializer
+
+    def perform_destroy(self, instance):
+        instance.active = False
+        instance.save(update_fields=('active', 'updated_at'))

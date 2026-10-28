@@ -1,0 +1,377 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap');
+
+.varnamala-page{
+  --bg: #0f2f28;
+  --bg-soft: #163d34;
+  --panel: #f4f7f5;
+  --ink: #12241f;
+  --muted: #5b6f68;
+  --accent: #1f7a5c;
+  --accent-dark: #145743;
+  --border: #d5e0db;
+  font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+  color: var(--ink);
+  background: radial-gradient(circle at top left, #2a6b55 0%, transparent 40%),
+    linear-gradient(160deg, #0f2f28 0%, #1a463c 45%, #0c241f 100%);
+  min-height: 100vh;
+}
+
+.varnamala-page *{ box-sizing: border-box; }
+.varnamala-page{ margin: 0; min-width: 320px; min-height: 100vh; }
+.varnamala-page button{ font: inherit; }
+.varnamala-page button:focus-visible{ outline: 3px solid #f6c945; outline-offset: 3px; }
+
+.varnamala-page .app-shell{ min-height: 100vh; }
+.varnamala-page .topbar{
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px max(24px, calc((100vw - 1100px) / 2));
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  color: white;
+  background: rgba(12,36,31,.86);
+  backdrop-filter: blur(10px);
+}
+.varnamala-page .brand{ display: inline-flex; align-items: center; gap: 10px; }
+.varnamala-page .brand-mark{
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  color: white;
+  background: linear-gradient(145deg,#3aa882,#1f7a5c);
+  font-family: "Noto Sans Telugu", sans-serif;
+  font-size: 22px;
+}
+.varnamala-page .brand strong{ display: block; font-family:"Noto Sans Telugu",sans-serif; font-size: 1rem; }
+.varnamala-page .brand div span{ display: block; color: rgba(255,255,255,.65); font-family:"Noto Sans Telugu",sans-serif; font-size: .72rem; }
+.varnamala-page .progress-pill{
+  padding: 7px 13px;
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 999px;
+  color: rgba(255,255,255,.9);
+  background: rgba(255,255,255,.08);
+  font-size: .85rem;
+}
+.varnamala-page .progress-pill span{ color: #f6c945; }
+.varnamala-page .topbar-actions{ display:flex; align-items:center; justify-content:flex-end; gap:10px; }
+.varnamala-page .language-selector{ display:flex; align-items:center; gap:7px; }
+.varnamala-page .language-label{ color:rgba(255,255,255,.6); font-size:.72rem; }
+.varnamala-page .language-options{ display:flex; gap:4px; }
+.varnamala-page .language-options button{ display:flex; align-items:center; gap:5px; padding:6px 9px; border:1px solid rgba(255,255,255,.2); border-radius:8px; color:rgba(255,255,255,.78); background:rgba(255,255,255,.06); cursor:pointer; font-family:inherit; font-size:.78rem; }
+.varnamala-page .language-options button span{ font-weight:700; }
+.varnamala-page .language-options button small{ color:rgba(255,255,255,.55); font-size:.65rem; }
+.varnamala-page .language-options button:hover:not(:disabled){ border-color:#8fd4ba; background:rgba(255,255,255,.14); }
+.varnamala-page .language-options button.selected{ border-color:#8fd4ba; color:#fff; background:rgba(31,122,92,.8); }
+.varnamala-page .language-options button:disabled{ cursor:not-allowed; opacity:.42; }
+.varnamala-page .parent-back-button{ padding:7px 12px; border:1px solid rgba(255,255,255,.3); border-radius:999px; color:rgba(255,255,255,.9); background:rgba(255,255,255,.08); cursor:pointer; font-size:.8rem; }
+.varnamala-page .parent-back-button:hover{ color:#fff; background:rgba(255,255,255,.18); }
+
+.varnamala-page .welcome{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:32px;
+  width: min(980px, 100%);
+  margin: auto;
+  padding: 38px 24px 30px;
+  color: white;
+}
+.varnamala-page .welcome .eyebrow{ color: #8fd4ba; }
+.varnamala-page .welcome-copy{ display:flex; align-items:baseline; flex-wrap:wrap; gap:18px; min-width:0; max-width:none; flex:1; white-space:nowrap; }
+.varnamala-page .welcome h1{ max-width:none; margin:0; font-size:clamp(1.8rem,3.5vw,3rem); font-weight:700; line-height:1.05; letter-spacing:-.04em; }
+.varnamala-page .welcome-greeting{ display:inline; margin-right:7px; color:rgba(255,255,255,.78); font-size:.46em; font-weight:600; letter-spacing:.01em; }
+.varnamala-page .welcome-name{ display:inline; max-width:100%; color:rgba(255,255,255,.78); font-size:.46em; font-weight:600; letter-spacing:.01em; overflow-wrap:anywhere; }
+.varnamala-page .intro{ max-width:none; margin:0; color:rgba(255,255,255,.78); font-size:.9rem; line-height:1.45; }
+.varnamala-page .manual-name-field{ display:flex; align-items:center; gap:10px; flex:0 0 100%; width:min(390px,100%); margin-top:0; padding:5px 7px 5px 10px; border:1px solid rgba(143,212,186,.25); border-radius:10px; color:rgba(255,255,255,.82); background:rgba(255,255,255,.06); font-size:.8rem; font-weight:600; }
+.varnamala-page .manual-name-field span{ flex:0 0 auto; }
+.varnamala-page .manual-name-field em{ color:rgba(255,255,255,.55); font-size:.75rem; font-style:normal; font-weight:400; }
+.varnamala-page .manual-name-field input{ width:100%; min-width:0; padding:8px 10px; border:1px solid rgba(143,212,186,.5); border-radius:7px; outline:none; color:var(--ink); background:rgba(255,255,255,.95); font:inherit; }
+.varnamala-page .manual-name-field input:focus{ border-color:#f6c945; box-shadow:0 0 0 3px rgba(246,201,69,.2); }
+.varnamala-page .welcome-art{ position:relative; display:grid; place-items:center; flex:0 0 120px; width:120px; height:120px; border:1px solid rgba(143,212,186,.35); border-radius:34px; background:linear-gradient(145deg,rgba(58,168,130,.48),rgba(20,87,67,.28)); box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 16px 30px rgba(0,0,0,.16); transform:rotate(4deg); }
+.varnamala-page .welcome-art-letter{ color:#fff; font-family:"Noto Sans Telugu",sans-serif; font-size:6rem; line-height:1; text-shadow:0 7px 0 rgba(12,36,31,.2); transform:rotate(-4deg); }
+.varnamala-page .welcome-art-spark{ position:absolute; color:#f6c945; font-size:1.3rem; }
+.varnamala-page .spark-one{ top:20px; right:20px; }
+.varnamala-page .spark-two{ bottom:25px; left:20px; font-size:.85rem; }
+.varnamala-page .sun-decoration{ display:none; }
+.varnamala-page .eyebrow{ margin: 0 0 4px; color: var(--accent-dark); font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.varnamala-page h2, .varnamala-page h3, .varnamala-page p{ margin-top: 0; }
+.varnamala-page h2{ margin-bottom: 0; }
+
+.varnamala-page .lesson-picker, .varnamala-page .lesson-area{
+  width: min(1100px, calc(100% - 48px));
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel);
+  box-shadow: 0 14px 34px rgba(0,0,0,.18);
+}
+.varnamala-page .lesson-picker{ padding: 22px; }
+.varnamala-page .section-heading{ display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.varnamala-page .section-heading.compact{ margin-bottom: 16px; }
+.varnamala-page .section-heading h2{ color: var(--ink); font-size: 1.55rem; }
+.varnamala-page .set-label{ padding: 4px 10px; border-radius: 999px; color: var(--accent-dark); background: #dff3ea; font-size: .78rem; font-weight: 700; }
+.varnamala-page .letter-sessions{ display:grid; gap:10px; }
+.varnamala-page .letter-session{ overflow:hidden; border:1px solid var(--border); border-radius:10px; background:#fbfcfb; }
+.varnamala-page .letter-session summary{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 14px; color:var(--ink); cursor:pointer; list-style:none; user-select:none; }
+.varnamala-page .letter-session summary::-webkit-details-marker{ display:none; }
+.varnamala-page .letter-session summary > span:first-child{ display:flex; align-items:baseline; gap:9px; }
+.varnamala-page .letter-session summary strong{ color:var(--accent-dark); font-family:"Noto Sans Telugu","Noto Sans Devanagari","Noto Sans Kannada","Noto Sans Tamil",sans-serif; font-size:1.15rem; }
+.varnamala-page .letter-session summary small{ color:var(--muted); font-size:.78rem; font-weight:600; }
+.varnamala-page .letter-session[open] summary{ border-bottom:1px solid var(--border); background:#f2f8f4; }
+.varnamala-page .session-chevron{ color:var(--accent); font-size:1.2rem; transition:transform .2s; }
+.varnamala-page .letter-session[open] .session-chevron{ transform:rotate(180deg); }
+.varnamala-page .letter-session .character-grid{ padding:12px; }
+.varnamala-page .character-grid{ display:grid; grid-template-columns:repeat(10,1fr); gap:9px; }
+.varnamala-page .character-card{
+  min-width: 0;
+  padding: 10px 4px 8px;
+  border: 2px solid #d5e0db;
+  border-radius: 12px;
+  color: var(--ink);
+  background: #fff;
+  cursor: pointer;
+  transition: .2s;
+}
+.varnamala-page .character-card:hover{ border-color: var(--accent); transform: translateY(-2px); }
+.varnamala-page .character-card.selected{ border-color: var(--accent); background: #dff3ea; box-shadow: 0 0 0 3px rgba(31,122,92,.12); }
+.varnamala-page .character-glyph{ display: block; font-family: "Noto Sans Telugu",sans-serif; font-size: 30px; line-height: 1.2; }
+.varnamala-page .character-name{ display: block; color: var(--muted); font-size: 12px; }
+
+.varnamala-page .lesson-area{ margin-top: 18px; padding: 22px; }
+.varnamala-page .lesson-header{ display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.varnamala-page .letter-title{ display: flex; align-items: center; gap: 12px; }
+.varnamala-page .big-glyph{ display: grid; place-items: center; width: 64px; height: 64px; border-radius: 14px; color: var(--accent-dark); background: #dff3ea; font-family:"Noto Sans Telugu",sans-serif; font-size: 42px; }
+.varnamala-page .letter-title h2{ font-size: 1.8rem; }
+.varnamala-page .pronunciation{ margin: 4px 0 0; color: var(--muted); font-size: .9rem; }
+.varnamala-page .mode-switcher{ display: flex; flex-wrap: wrap; gap: 8px; }
+.varnamala-page .mode-switcher button{
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--ink);
+  background: #e7efeb;
+  cursor: pointer;
+  font-size: .92rem;
+}
+.varnamala-page .mode-switcher button.active{ color: white; background: var(--accent); }
+.varnamala-page .word-examples{ width:min(1100px,calc(100% - 48px)); margin:18px auto 0; padding:22px; border:1px solid var(--border); border-radius:16px; background:var(--panel); box-shadow:0 14px 34px rgba(0,0,0,.16); }
+.varnamala-page .word-examples-heading{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+.varnamala-page .word-examples-heading h2{ color:var(--ink); font-size:1.25rem; }
+.varnamala-page .word-examples-script{ color:var(--accent-dark); font-family:"Noto Sans Telugu",sans-serif; font-size:1.35rem; font-weight:700; }
+.varnamala-page .word-examples-controls{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin:-2px 0 10px; color:var(--muted); font-size:.78rem; font-weight:700; }
+.varnamala-page .word-examples-controls > div{ display:flex; gap:6px; }
+.varnamala-page .word-examples-arrow{ display:grid; place-items:center; width:30px; height:30px; border:1px solid var(--border); border-radius:50%; color:var(--accent-dark); background:#fff; cursor:pointer; font-size:1.05rem; line-height:1; }
+.varnamala-page .word-examples-arrow:hover:not(:disabled){ color:#fff; background:var(--accent); border-color:var(--accent); }
+.varnamala-page .word-examples-arrow:disabled{ opacity:.35; cursor:not-allowed; }
+.varnamala-page .word-example-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.varnamala-page .word-example-card{ min-width:0; padding:10px; border:1px solid var(--border); border-radius:10px; background:#fbfcfb; text-align:center; }
+.varnamala-page .word-example-image{ display:grid; place-items:center; height:90px; border-radius:8px; background:linear-gradient(145deg,#e8f5ef,#d5e9e0); }
+.varnamala-page .word-example-image span{ font-size:3.2rem; filter:drop-shadow(0 4px 3px rgba(18,36,31,.12)); }
+.varnamala-page .word-example-card h3{ margin:8px 0 0; color:var(--accent-dark); font-family:"Noto Sans Telugu",sans-serif; font-size:1.2rem; }
+.varnamala-page .word-example-card p{ margin:0; color:var(--muted); font-size:.75rem; }
+.varnamala-page .worksheet-controls{ display:flex; align-items:center; justify-content:flex-end; gap:12px; margin-top:15px; }
+.varnamala-page .worksheet-size{ display:flex; align-items:end; gap:6px; color:var(--muted); font-size:.72rem; font-weight:700; }
+.varnamala-page .worksheet-size label{ display:grid; gap:3px; }
+.varnamala-page .worksheet-size input{ width:42px; padding:7px 5px; border:1px solid var(--border); border-radius:7px; color:var(--ink); background:#fff; font:inherit; text-align:center; }
+.varnamala-page .worksheet-size-x{ padding-bottom:7px; color:var(--accent-dark); font-size:1rem; }
+.varnamala-page .worksheet-link{ display:block; padding:8px 12px; border:1px solid var(--accent); border-radius:8px; color:var(--accent-dark); background:#fff; cursor:pointer; font-size:.84rem; font-weight:700; }
+.varnamala-page .worksheet-link:hover{ color:#fff; background:var(--accent); }
+.varnamala-page .letter-navigation{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:14px; padding-top:14px; border-top:1px solid var(--border); }
+.varnamala-page .letter-navigation > span{ color:var(--muted); font-size:.8rem; font-weight:700; }
+.varnamala-page .pdf-preview{ margin-top:20px; padding-top:20px; border-top:1px solid var(--border); }
+.varnamala-page .pdf-preview-heading{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+.varnamala-page .pdf-preview-heading h2{ color:var(--ink); font-size:1.25rem; }
+.varnamala-page .pdf-open-link{ color:var(--accent-dark); font-size:.82rem; font-weight:700; }
+.varnamala-page .pdf-open-link:hover{ color:var(--accent); }
+.varnamala-page .pdf-frame{ display:block; width:100%; height:520px; border:1px solid var(--border); border-radius:10px; background:#fff; }
+
+.varnamala-page .learn-grid, .varnamala-page .trace-layout{ display: grid; grid-template-columns: 260px 1fr; gap: 16px; padding-top: 20px; }
+.varnamala-page .fact-card, .varnamala-page .demo-card, .varnamala-page .trace-card, .varnamala-page .trace-side{ border: 1px solid var(--border); border-radius: 12px; background: #fff; }
+.varnamala-page .fact-card{ display: flex; flex-direction: column; padding: 20px; }
+.varnamala-page .fact-card .eyebrow{ color: var(--accent-dark); }
+.varnamala-page .example-word{ margin: 16px 0 23px; font-family:"Noto Sans Telugu",sans-serif; font-size: 25px; }
+.varnamala-page .pronunciation-button{ display:inline-flex; align-items:center; gap:6px; margin-bottom:18px; padding:7px 10px; border:1px solid var(--border); border-radius:999px; color:var(--accent-dark); background:#fff; cursor:pointer; font-size:.8rem; font-weight:700; }
+.varnamala-page .pronunciation-button:hover{ border-color:var(--accent); background:#eef8f3; }
+.varnamala-page .tip{ margin-top: auto; color: var(--muted); font-size: .9rem; }
+.varnamala-page .primary-button, .varnamala-page .secondary-button, .varnamala-page .next-button{
+  border-radius: 10px;
+  padding: 11px 14px;
+  border: 0;
+  font-weight: 700;
+  cursor: pointer;
+}
+.varnamala-page .primary-button{ color: white; background: var(--accent); }
+.varnamala-page .primary-button:hover{ background: var(--accent-dark); }
+.varnamala-page .primary-button span{ float: right; }
+.varnamala-page .secondary-button{ color: var(--accent-dark); border: 1px solid var(--border); background: #fff; }
+.varnamala-page .secondary-button:hover{ background: #eef3f1; }
+.varnamala-page .secondary-button:disabled{ opacity:.45; cursor:not-allowed; }
+.varnamala-page .secondary-button:disabled:hover{ background:#fff; }
+.varnamala-page .demo-card, .varnamala-page .trace-card{ min-width: 0; padding: 18px; }
+.varnamala-page .demo-card .eyebrow, .varnamala-page .trace-card .eyebrow{ color: var(--accent-dark); }
+.varnamala-page .demo-controls{ display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:7px; }
+.varnamala-page .stroke-demo{ height: 270px; margin: 10px auto 0; }
+.varnamala-page .speed-control{ display:grid; gap:2px; width:min(165px,100%); margin:0; color:var(--muted); font-size:.7rem; }
+.varnamala-page .speed-control strong{ color:var(--accent-dark); }
+.varnamala-page .speed-control input{ width:100%; accent-color:var(--accent); cursor:pointer; }
+.varnamala-page .speed-labels{ display:flex; justify-content:space-between; color:#8a9a93; font-size:.64rem; }
+.varnamala-page .color-picker{ display:flex; align-items:center; gap:7px; margin-top:10px; color:var(--muted); font-size:.7rem; }
+.varnamala-page .color-swatch{ width:18px; height:18px; padding:0; border:2px solid transparent; border-radius:50%; cursor:pointer; box-shadow:0 1px 2px rgba(18,36,31,.2); }
+.varnamala-page .color-swatch:hover, .varnamala-page .color-swatch.selected{ border-color:#fff; outline:2px solid var(--ink); }
+.varnamala-page .stroke-demo svg, .varnamala-page .tracing-surface svg{ width: 100%; height: 100%; overflow: visible; }
+.varnamala-page .demo-guide{ fill:none; stroke:#edf2ef; stroke-width:29; stroke-linecap:round; stroke-linejoin:round; }
+.varnamala-page .demo-stroke{ fill:none; stroke:var(--accent); stroke-width:15; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:none; stroke-dashoffset:0; }
+.varnamala-page .demo-stroke.is-playing{ stroke-dasharray:1; stroke-dashoffset:1; animation:draw linear both; }
+.varnamala-page .stroke-number{ fill:#f6c945; }
+.varnamala-page .stroke-number-text{ fill:#12241f; font-size:13px; font-weight:700; text-anchor:middle; dominant-baseline:central; }
+.varnamala-page .writing-pen{ pointer-events:none; }
+.varnamala-page .pencil-body{ fill:#f6c945; stroke:#9a6c16; stroke-width:1.5; }
+.varnamala-page .pencil-tip{ fill:#e8c29b; stroke:#9a6c16; stroke-width:1.5; stroke-linejoin:round; }
+.varnamala-page .pencil-lead{ fill:#37453f; }
+.varnamala-page .pencil-highlight{ fill:none; stroke:#fff7c7; stroke-width:2; stroke-linecap:round; opacity:.9; }
+.varnamala-page .pencil-band{ fill:#ef8f9b; stroke:#a94e5e; stroke-width:1.5; }
+.varnamala-page .celebration{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; border-radius:10px; color:#145743; background:rgba(223,243,234,.94); animation:celebrate-in .35s ease-out both; pointer-events:none; }
+.varnamala-page .celebration-stars{ color:#f0b82e; font-size:2.1rem; letter-spacing:12px; animation:celebrate-stars .8s ease-in-out infinite alternate; }
+.varnamala-page .celebration strong{ font-size:2rem; }
+.varnamala-page .celebration > span:last-child{ color:#5b6f68; font-size:.95rem; }
+.varnamala-page .stroke-list{ display:flex; gap:8px; padding:0; margin:5px 0 0; list-style:none; color:#9aaba4; font-size:12px; }
+.varnamala-page .stroke-list li{ display:flex; align-items:center; gap:5px; }
+.varnamala-page .stroke-list span{ display:grid; place-items:center; width:21px; height:21px; border-radius:50%; background:#dfe8e4; }
+.varnamala-page .stroke-list li.is-visible{ color:var(--accent-dark); }
+.varnamala-page .stroke-list li.is-visible span{ color:#fff; background:var(--accent); }
+
+.varnamala-page .trace-layout{ grid-template-columns: 1fr 220px; }
+.varnamala-page .tracing-surface{ position:relative; height:390px; margin:7px 0 8px; border-radius:10px; background: repeating-linear-gradient(0deg,transparent 0,transparent 101px,#eef3f1 102px),#fff; touch-action:none; }
+.varnamala-page .trace-guide, .varnamala-page .trace-path{ fill:none; stroke:#cbd8d2; stroke-width:31; stroke-linecap:round; stroke-linejoin:round; }
+.varnamala-page .trace-path{ stroke:#e2ebe7; }
+.varnamala-page .completed-stroke .trace-path{ stroke:#b8dfca; }
+.varnamala-page .start-dot{ fill:#f6c945; stroke:#fff; stroke-width:4; animation:pulse 1.2s infinite; }
+.varnamala-page .arrow{ fill:none; stroke:#799187; stroke-width:7; stroke-linecap:round; stroke-linejoin:round; }
+.varnamala-page .child-stroke{ fill:none; stroke:var(--accent); stroke-width:12; stroke-linecap:round; stroke-linejoin:round; }
+.varnamala-page .current-stroke{ stroke:#ef8f2b; }
+.varnamala-page .trace-message{ min-height:23px; margin:0; color:var(--accent-dark); font-size:.9rem; font-weight:600; }
+.varnamala-page .trace-actions{ display:flex; gap:7px; }
+.varnamala-page .text-button{ padding: 7px 10px; border:1px solid var(--border); border-radius:8px; color:var(--ink); background:#fff; cursor:pointer; font-size:.82rem; }
+.varnamala-page .text-button:hover{ border-color:var(--accent); color:var(--accent-dark); }
+.varnamala-page .text-button:disabled{ opacity:.4; cursor:not-allowed; }
+.varnamala-page .progress-dots{ display:flex; justify-content:center; gap:8px; }
+.varnamala-page .progress-dots span{ width:9px; height:9px; border-radius:50%; background:#cbd8d2; }
+.varnamala-page .progress-dots span.done{ background:#1f9d63; }
+.varnamala-page .trace-side{ padding:20px; }
+.varnamala-page .mini-character{ margin:10px 0; color:var(--accent); font-family:"Noto Sans Telugu",sans-serif; font-size:74px; line-height:1; }
+.varnamala-page .trace-side h3{ margin:0 0 8px; }
+.varnamala-page .trace-side p:not(.eyebrow){ color:var(--muted); font-size:.9rem; line-height:1.45; }
+.varnamala-page .homework-choice{ display:flex; gap:8px; margin:14px 0 12px; }
+.varnamala-page .homework-choice button{ flex:1; padding:8px 5px; border:1px solid var(--border); border-radius:8px; color:var(--ink); background:#fff; cursor:pointer; font-size:.82rem; }
+.varnamala-page .homework-choice button.selected{ border-color:var(--accent); color:#fff; background:var(--accent); }
+.varnamala-page .homework-input{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin:14px 0 12px; color:var(--muted); font-size:.84rem; font-weight:600; }
+.varnamala-page .homework-input input{ width:76px; padding:8px 9px; border:1px solid var(--border); border-radius:8px; color:var(--ink); background:#fff; font:inherit; text-align:center; }
+.varnamala-page .homework-input input:focus{ border-color:var(--accent); outline:2px solid rgba(31,122,92,.14); }
+.varnamala-page .homework-count{ padding:10px; border-radius:8px; color:var(--accent-dark); background:#dff3ea; font-size:.88rem; text-align:center; }
+.varnamala-page .full-width{ width:100%; margin-top:18px; }
+.varnamala-page .certificate-page{ width:100%; }
+.varnamala-page .certificate-actions{ display:flex; justify-content:space-between; gap:12px; margin-bottom:18px; }
+.varnamala-page .worksheet{ padding:30px; border:8px double #b8d5c8; border-radius:8px; background:#fff; box-shadow:0 14px 34px rgba(0,0,0,.12); }
+.varnamala-page .worksheet-header{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding-bottom:20px; border-bottom:2px dashed #b8d5c8; }
+.varnamala-page .worksheet-kicker{ margin:0 0 5px; color:var(--accent-dark); font-family:"Noto Sans Telugu",sans-serif; font-size:.75rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.varnamala-page .worksheet h1{ margin:0 0 5px; color:var(--ink); font-size:clamp(1.7rem,4vw,2.5rem); }
+.varnamala-page .worksheet-header p:not(.worksheet-kicker){ margin:0; color:var(--muted); }
+.varnamala-page .worksheet-badge{ display:grid; place-items:center; width:68px; height:68px; border:3px solid #f6c945; border-radius:50%; color:#f0b82e; font-size:30px; font-weight:800; transform:rotate(8deg); }
+.varnamala-page .worksheet-badge span{ margin-top:-8px; font-size:.65rem; }
+.varnamala-page .worksheet-letter{ display:flex; align-items:center; gap:15px; margin:22px 0; padding:13px 17px; border-radius:10px; background:#f4f8f5; }
+.varnamala-page .worksheet-glyph{ color:var(--accent); font-family:"Noto Sans Telugu",sans-serif; font-size:58px; line-height:1; }
+.varnamala-page .worksheet-letter h2{ color:var(--ink); }
+.varnamala-page .worksheet-letter p:last-child{ margin:3px 0 0; color:var(--muted); }
+.varnamala-page .attempt-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+.varnamala-page .attempt-cell{ position:relative; min-width:0; aspect-ratio:1/1; border:1px solid #d5e0db; border-radius:8px; background:repeating-linear-gradient(0deg,transparent 0,transparent 48%,#edf3ef 49%,transparent 50%); }
+.varnamala-page .attempt-number{ position:absolute; top:5px; left:7px; z-index:1; color:var(--accent-dark); font-size:.72rem; font-weight:800; }
+.varnamala-page .attempt-cell svg{ width:100%; height:100%; }
+.varnamala-page .worksheet-guide{ fill:none; stroke:#e8efeb; stroke-width:31; stroke-linecap:round; stroke-linejoin:round; }
+.varnamala-page .worksheet-trace{ fill:none; stroke:var(--accent); stroke-width:12; stroke-linecap:round; stroke-linejoin:round; }
+.varnamala-page .worksheet-footer{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-top:25px; padding-top:14px; border-top:1px solid #d5e0db; color:var(--muted); font-size:.78rem; }
+.varnamala-page .printable-page{ min-height:100vh; padding:24px; background:#f4f7f5; }
+.varnamala-page .printable-actions{ display:flex; justify-content:space-between; gap:12px; width:min(960px,100%); margin:0 auto 18px; }
+.varnamala-page .printable-sheet{ width:min(960px,100%); margin:0 auto; padding:30px; border:8px double #b8d5c8; border-radius:8px; background:#fff; box-shadow:0 14px 34px rgba(0,0,0,.12); }
+.varnamala-page .printable-header{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; padding-bottom:16px; border-bottom:2px dashed #b8d5c8; }
+.varnamala-page .printable-header h1{ margin:0 0 5px; color:var(--ink); font-size:clamp(1.7rem,4vw,2.5rem); }
+.varnamala-page .printable-header p:not(.worksheet-kicker){ margin:0; color:var(--muted); }
+.varnamala-page .printable-glyph{ color:var(--accent); font-family:"Noto Sans Telugu",sans-serif; font-size:76px; line-height:1; }
+.varnamala-page .printable-student-line{ margin:18px 0; color:var(--muted); font-size:.9rem; }
+.varnamala-page .practice-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.varnamala-page .practice-cell{ position:relative; min-width:0; aspect-ratio:1.25/1; overflow:hidden; border:1px solid #d5e0db; border-radius:8px; background:#fff; }
+.varnamala-page .practice-number{ position:absolute; top:5px; left:7px; z-index:1; color:#9aaba4; font-size:.72rem; }
+.varnamala-page .practice-cell svg{ width:100%; height:100%; }
+.varnamala-page .practice-line{ stroke:#c9ddd2; stroke-width:1.5; }
+.varnamala-page .practice-guide{ fill:none; stroke:#91b8a6; stroke-width:6; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:2 8; }
+.varnamala-page .printable-footer{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-top:20px; padding-top:12px; border-top:1px solid #d5e0db; color:var(--muted); font-size:.8rem; }
+.varnamala-page .printable-footer strong{ color:var(--accent-dark); }
+.varnamala-page footer{ width:min(1100px,calc(100% - 48px)); margin:0 auto; padding:18px 24px 28px; color:rgba(255,255,255,.65); text-align:center; font-size:.9rem; }
+.varnamala-page footer span{ color:#8fd4ba; }
+.varnamala-page .next-button{ margin-left:18px; padding:8px 12px; color:white; background:var(--accent); font-size:.82rem; }
+.varnamala-page .next-button:hover{ background:var(--accent-dark); }
+@keyframes draw { from { opacity:1; stroke-dashoffset:1; } to { opacity:1; stroke-dashoffset:0; } }
+@keyframes pulse { 50% { transform:scale(1.25); transform-origin:center; } }
+@keyframes celebrate-in { from { opacity:0; transform:scale(.82); } to { opacity:1; transform:scale(1); } }
+@keyframes celebrate-stars { from { transform:scale(.9) rotate(-4deg); } to { transform:scale(1.1) rotate(4deg); } }
+
+@media (max-width:800px) {
+  .varnamala-page .character-grid{ grid-template-columns:repeat(5,1fr); }
+  .varnamala-page .learn-grid, .varnamala-page .trace-layout{ grid-template-columns:1fr; }
+  .varnamala-page .trace-side{ text-align:center; }
+  .varnamala-page .trace-side .full-width{ max-width:260px; }
+}
+@media (max-width:520px) {
+  .varnamala-page .topbar{ padding:12px 16px; }
+  .varnamala-page .progress-pill{ padding:6px 9px; font-size:.75rem; }
+  .varnamala-page .topbar-actions{ gap:6px; }
+  .varnamala-page .parent-back-button{ padding:6px 8px; font-size:.7rem; }
+  .varnamala-page .language-label{ display:none; }
+  .varnamala-page .language-options button{ padding:5px 6px; }
+  .varnamala-page .language-options button small{ display:none; }
+  .varnamala-page .welcome{ padding:32px 24px 24px; }
+  .varnamala-page .welcome-copy{ align-items:flex-start; flex-direction:column; gap:8px; white-space:normal; }
+  .varnamala-page .welcome h1{ font-size:2.2rem; }
+  .varnamala-page .intro{ font-size:.95rem; }
+  .varnamala-page .manual-name-field{ display:grid; gap:4px; padding:7px 9px 9px; }
+  .varnamala-page .welcome-art{ flex-basis:90px; width:90px; height:90px; border-radius:26px; }
+  .varnamala-page .welcome-art-letter{ font-size:3.8rem; }
+  .varnamala-page .lesson-picker, .varnamala-page .lesson-area{ width:calc(100% - 24px); }
+  .varnamala-page .worksheet-controls{ align-items:stretch; flex-direction:column; }
+  .varnamala-page .worksheet-size{ justify-content:center; }
+  .varnamala-page .worksheet-link{ width:100%; }
+  .varnamala-page .lesson-header{ align-items:flex-start; flex-direction:column; }
+  .varnamala-page .mode-switcher{ width:100%; }
+  .varnamala-page .mode-switcher button{ flex:1; }
+  .varnamala-page .word-example-grid{ grid-template-columns:repeat(2,1fr); }
+  .varnamala-page .pdf-preview-heading{ align-items:flex-start; flex-direction:column; }
+  .varnamala-page .pdf-frame{ height:420px; }
+  .varnamala-page .section-heading{ align-items:flex-start; flex-direction:column; }
+  .varnamala-page .section-heading .secondary-button{ align-self:flex-end; margin-top:-42px; }
+  .varnamala-page .stroke-demo{ height:220px; }
+  .varnamala-page .tracing-surface{ height:280px; }
+  .varnamala-page .next-button{ display:block; margin:12px auto 0; }
+  .varnamala-page .certificate-actions{ align-items:stretch; flex-direction:column; }
+  .varnamala-page .certificate-actions button{ width:100%; }
+  .varnamala-page .worksheet{ padding:16px; }
+  .varnamala-page .attempt-grid{ grid-template-columns:repeat(2,1fr); }
+  .varnamala-page .worksheet-footer{ flex-direction:column; }
+  .varnamala-page .printable-page{ padding:12px; }
+  .varnamala-page .printable-sheet{ padding:16px; }
+  .varnamala-page .printable-header{ gap:8px; }
+  .varnamala-page .printable-glyph{ font-size:56px; }
+}
+@media print {
+  .varnamala-page{ background:#fff; }
+  .varnamala-page .topbar, .varnamala-page .welcome, .varnamala-page .lesson-picker, .varnamala-page .lesson-header, .varnamala-page .certificate-actions, .varnamala-page footer, .varnamala-page .printable-actions{ display:none !important; }
+  .varnamala-page .lesson-area{ width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+  .varnamala-page .worksheet, .varnamala-page .printable-sheet{ box-shadow:none; }
+  .varnamala-page .printable-page{ padding:0; background:#fff; }
+  .varnamala-page .printable-sheet{ width:100%; border-width:5px; }
+}

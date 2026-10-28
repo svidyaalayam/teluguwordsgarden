@@ -81,3 +81,34 @@ class LessonWord(models.Model):
     class Meta:
         unique_together = ('lesson', 'word')
         ordering = ('display_order',)
+
+
+class ResourceCategory(TimeStampedModel):
+    """A reader-facing grouping for books, stories, worksheets and similar material."""
+
+    name = models.CharField(max_length=120, unique=True)
+    description = models.TextField(blank=True)
+    display_order = models.PositiveSmallIntegerField(default=0)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ('display_order', 'name')
+        verbose_name_plural = 'Resource categories'
+
+    def __str__(self):
+        return self.name
+
+
+class Resource(TimeStampedModel):
+    title = models.CharField(max_length=240)
+    description = models.TextField(blank=True)
+    preview_url = models.URLField(help_text='Public PDF or embeddable preview URL.')
+    author = models.CharField(max_length=160, blank=True)
+    category = models.ForeignKey(ResourceCategory, on_delete=models.PROTECT, related_name='resources')
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ('category__display_order', 'title')
+
+    def __str__(self):
+        return self.title

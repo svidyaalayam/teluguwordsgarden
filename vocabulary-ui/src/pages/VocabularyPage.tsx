@@ -19,10 +19,10 @@ type ActiveTab = 'cards' | 'sound-quiz' | 'listen-spell' | 'matching'
 function groupWordsByCategory(
   words: VocabularyWord[],
   categories: VocabularyCategory[],
-  selectedCategory: string,
+  selectedCategoryIds: Set<number>,
 ) {
   const groups = categories
-    .filter(category => !selectedCategory || category.id === Number(selectedCategory))
+    .filter(category => selectedCategoryIds.size === 0 || selectedCategoryIds.has(category.id))
     .map(category => ({
       id: category.id,
       name: category.name,
@@ -30,7 +30,7 @@ function groupWordsByCategory(
     }))
     .filter(group => group.words.length > 0)
 
-  if (!selectedCategory) {
+  if (selectedCategoryIds.size === 0) {
     const knownCategoryIds = new Set(categories.map(category => category.id))
     const uncategorizedWords = words.filter(word => word.categories.length === 0)
     const otherCategoryWords = words.filter(word =>
@@ -47,13 +47,128 @@ function groupWordsByCategory(
   return groups
 }
 
+function categoryAndDescendantIds(categories: VocabularyCategory[], categoryId: number): Set<number> {
+  const ids = new Set<number>([categoryId])
+  let foundChild = true
+  while (foundChild) {
+    foundChild = false
+    for (const category of categories) {
+      if (category.parent !== null && ids.has(category.parent) && !ids.has(category.id)) {
+        ids.add(category.id)
+        foundChild = true
+      }
+    }
+  }
+  return ids
+}
+
+function CategoryTree({
+  categories,
+  words,
+  selectedCategoryIds,
+  onChange,
+}: {
+  categories: VocabularyCategory[]
+  words: VocabularyWord[]
+  selectedCategoryIds: Set<number>
+  onChange: (ids: Set<number>) => void
+}) {
+  const [expandedIds, setExpandedIds] = useState<Set<number>>(
+    () => new Set(categories.filter(category => category.parent === null).map(category => category.id)),
+  )
+  useEffect(() => {
+    if (categories.length > 0) {
+      setExpandedIds(current => current.size > 0
+        ? current
+        : new Set(categories.filter(category => category.parent === null).map(category => category.id)))
+    }
+  }, [categories])
+  const childrenFor = (parentId: number | null) => categories
+    .filter(category => category.parent === parentId)
+    .sort((a, b) => a.name.localeCompare(b.name))
+
+  const descendantIdsFor = (categoryId: number) => categoryAndDescendantIds(categories, categoryId)
+  const wordCountFor = (categoryId: number) => {
+    const ids = descendantIdsFor(categoryId)
+    return words.filter(word => word.categories.some(id => ids.has(id))).length
+  }
+  const toggleCategory = (categoryId: number, checked: boolean) => {
+    const next = new Set(selectedCategoryIds)
+    for (const id of descendantIdsFor(categoryId)) {
+      if (checked) next.add(id)
+      else next.delete(id)
+    }
+    onChange(next)
+  }
+  const toggleExpanded = (categoryId: number) => {
+    setExpandedIds(current => {
+      const next = new Set(current)
+      if (next.has(categoryId)) next.delete(categoryId)
+      else next.add(categoryId)
+      return next
+    })
+  }
+
+  const renderNode = (category: VocabularyCategory) => {
+    const children = childrenFor(category.id)
+    const bilingual = formatBilingualCategory(category.name)
+    const descendantIds = descendantIdsFor(category.id)
+    const selectedDescendantCount = [...descendantIds].filter(id => selectedCategoryIds.has(id)).length
+    const checked = selectedDescendantCount === descendantIds.size
+    const partiallyChecked = selectedDescendantCount > 0 && !checked
+    return (
+      <li key={category.id}>
+        <div className="category-tree-node">
+          {children.length > 0 ? (
+            <button
+              type="button"
+              className="category-tree-toggle"
+              onClick={() => toggleExpanded(category.id)}
+              aria-expanded={expandedIds.has(category.id)}
+              aria-label={`${expandedIds.has(category.id) ? 'Collapse' : 'Expand'} ${bilingual.combined}`}
+            >
+              {expandedIds.has(category.id) ? '▾' : '▸'}
+            </button>
+          ) : <span className="category-tree-toggle-spacer" />}
+          <label className="category-tree-label">
+            <input
+              type="checkbox"
+              checked={checked}
+              ref={(input) => { if (input) input.indeterminate = partiallyChecked }}
+              onChange={(event) => toggleCategory(category.id, event.target.checked)}
+            />
+            <span>{bilingual.combined}</span>
+            <small>{wordCountFor(category.id)}</small>
+          </label>
+        </div>
+        {children.length > 0 && expandedIds.has(category.id) && <ul>{children.map(renderNode)}</ul>}
+      </li>
+    )
+  }
+
+  return (
+    <section className="category-tree" aria-label="Browse vocabulary by category">
+      <div className="category-tree-heading">
+        <strong>Browse vocabulary by category</strong>
+        <button type="button" className="category-tree-clear" onClick={() => onChange(new Set())}>
+          Clear selection
+        </button>
+      </div>
+      <div className="category-tree-actions">
+        <span>{selectedCategoryIds.size === 0 ? 'All categories selected' : `${selectedCategoryIds.size} categories selected`}</span>
+      </div>
+      <ul>{childrenFor(null).map(renderNode)}</ul>
+    </section>
+  )
+}
+
 export default function VocabularyPage() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('cards')
   const [words, setWords] = useState<VocabularyWord[]>([])
   const [categories, setCategories] = useState<VocabularyCategory[]>([])
   const [levels, setLevels] = useState<LearningLevel[]>([])
   const [query, setQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('')
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<Set<number>>(new Set())
   const [selectedLevel, setSelectedLevel] = useState('')
   const [error, setError] = useState('')
   const [filterError, setFilterError] = useState('')
@@ -79,7 +194,7 @@ export default function VocabularyPage() {
 
   const visibleWords = words.filter(word =>
     (!selectedLevel || word.levels.includes(Number(selectedLevel))) &&
-    (!selectedCategory || word.categories.includes(Number(selectedCategory))),
+    (selectedCategoryIds.size === 0 || word.categories.some(categoryId => selectedCategoryIds.has(categoryId))),
   )
   const visibleLevels = selectedLevel
     ? levels.filter(level => level.id === Number(selectedLevel))
@@ -89,7 +204,7 @@ export default function VocabularyPage() {
     return {
       id: level.id,
       name: level.name,
-      categories: groupWordsByCategory(levelWords, categories, selectedCategory),
+      categories: groupWordsByCategory(levelWords, categories, selectedCategoryIds),
     }
   }).filter(group => group.categories.length > 0)
 
@@ -99,16 +214,16 @@ export default function VocabularyPage() {
   if (unassignedLevelWords.length > 0 && !selectedLevel) {
     const noLevelWords = unassignedLevelWords.filter(word => word.levels.length === 0)
     const otherLevelWords = unassignedLevelWords.filter(word => word.levels.length > 0)
-    const categoriesWithoutLevel = groupWordsByCategory(noLevelWords, categories, selectedCategory)
+    const categoriesWithoutLevel = groupWordsByCategory(noLevelWords, categories, selectedCategoryIds)
     if (otherLevelWords.length > 0) {
-      categoriesWithoutLevel.push(...groupWordsByCategory(otherLevelWords, categories, selectedCategory))
+      categoriesWithoutLevel.push(...groupWordsByCategory(otherLevelWords, categories, selectedCategoryIds))
     }
     if (categoriesWithoutLevel.length > 0) {
       if (noLevelWords.length > 0) {
-        wordGroups.push({ id: 0, name: 'All Levels • అన్ని స్థాయిలు', categories: groupWordsByCategory(noLevelWords, categories, selectedCategory) })
+        wordGroups.push({ id: 0, name: 'All Levels • అన్ని స్థాయిలు', categories: groupWordsByCategory(noLevelWords, categories, selectedCategoryIds) })
       }
       if (otherLevelWords.length > 0) {
-        wordGroups.push({ id: -1, name: 'Other levels', categories: groupWordsByCategory(otherLevelWords, categories, selectedCategory) })
+        wordGroups.push({ id: -1, name: 'Other levels', categories: groupWordsByCategory(otherLevelWords, categories, selectedCategoryIds) })
       }
     }
   }
@@ -230,24 +345,14 @@ export default function VocabularyPage() {
                   ))}
                 </select>
               </label>
-              <label className="vocabulary-filter">
-                Category
-                <select
-                  value={selectedCategory}
-                  onChange={(event) => setSelectedCategory(event.target.value)}
-                >
-                  <option value="">All categories • అన్ని విభాగాలు ({categories.length})</option>
-                  {categories.map((category) => {
-                    const bilingual = formatBilingualCategory(category.name)
-                    return (
-                      <option key={category.id} value={category.id}>
-                        {bilingual.combined}
-                      </option>
-                    )
-                  })}
-                </select>
-              </label>
             </div>
+
+            <CategoryTree
+              categories={categories}
+              words={words}
+              selectedCategoryIds={selectedCategoryIds}
+              onChange={setSelectedCategoryIds}
+            />
 
             {error && <p className="error">{error}</p>}
             {filterError && <p className="error">{filterError}</p>}

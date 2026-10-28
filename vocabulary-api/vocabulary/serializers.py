@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import LearningLevel, Lesson, LessonWord, VocabularyCategory, Word
+from .models import LearningLevel, Lesson, LessonWord, Resource, ResourceCategory, VocabularyCategory, Word
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -39,5 +39,21 @@ class LessonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lesson
+        fields = '__all__'
+        read_only_fields = ('id', 'created_at', 'updated_at')
+
+
+class ResourceCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ResourceCategory
+        fields = '__all__'
+        read_only_fields = ('id', 'created_at', 'updated_at')
+
+
+class ResourceSerializer(serializers.ModelSerializer):
+    category_name = serializers.CharField(source='category.name', read_only=True)
+
+    class Meta:
+        model = Resource
         fields = '__all__'
         read_only_fields = ('id', 'created_at', 'updated_at')

@@ -16,6 +16,7 @@ export interface VocabularyWord {
 export interface VocabularyCategory {
   id: number
   name: string
+  parent: number | null
   active: boolean
 }
 
@@ -24,6 +25,25 @@ export interface LearningLevel {
   name: string
   description: string
   display_order: number
+  active: boolean
+}
+
+export interface ResourceCategory {
+  id: number
+  name: string
+  description: string
+  display_order: number
+  active: boolean
+}
+
+export interface LearningResource {
+  id: number
+  title: string
+  description: string
+  preview_url: string
+  author: string
+  category: number
+  category_name: string
   active: boolean
 }
 
@@ -39,5 +59,17 @@ export async function listVocabularyCategories(): Promise<VocabularyCategory[]> 
 
 export async function listLearningLevels(): Promise<LearningLevel[]> {
   const { data } = await api.get<LearningLevel[]>('/api/vocabulary/levels/')
+  return data
+}
+
+export async function listResourceCategories(): Promise<ResourceCategory[]> {
+  const { data } = await api.get<ResourceCategory[]>('/api/vocabulary/resource-categories/')
+  return data
+}
+
+export async function listResources(query = '', category?: number): Promise<LearningResource[]> {
+  const { data } = await api.get<LearningResource[]>('/api/vocabulary/resources/', {
+    params: { q: query || undefined, category },
+  })
   return data
 }

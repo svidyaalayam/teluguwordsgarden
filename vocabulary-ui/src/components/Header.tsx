@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext'
 import BackToBmkButton from './BackToBmkButton'
 
@@ -11,10 +11,17 @@ export default function Header() {
         <Link to="/" className="vp-brand">
           <span className="vp-brand-icon">🌱</span>
           <span className="vp-brand-text">
-            <strong>Word Garden</strong>
-            <span className="vp-brand-sub">పదాల తోట</span>
+            <strong>Telugu Learning</strong>
+            <span className="vp-brand-sub">తెలుగు నేర్చుకుందాం</span>
           </span>
         </Link>
+
+        <nav className="vp-main-nav" aria-label="Main navigation">
+          <NavLink to="/" end>Home</NavLink>
+          <NavLink to="/varnamala">Varnamala</NavLink>
+          <NavLink to="/word-garden">Word Garden</NavLink>
+          <NavLink to="/resources">Resources</NavLink>
+        </nav>
 
         <div className="vp-header-actions">
           <BackToBmkButton className="vp-btn vp-btn-outline" />
