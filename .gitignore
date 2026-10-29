@@ -3,6 +3,7 @@ postgres_data/
 **/__pycache__/
 *.py[cod]
 *.sqlite3
+/backups
 node_modules/
 dist/
 .vite/
