@@ -47,6 +47,14 @@ def user_from_bmk_claims(claims: dict) -> User:
     )
     username = str(username).strip()[:150]
     email = (claims.get('email') or f'{username}@bmk.linked').strip().lower()
+    first_name = str(claims.get('first_name') or claims.get('given_name') or '').strip()[:150]
+    last_name = str(claims.get('last_name') or claims.get('family_name') or '').strip()[:150]
+    if not first_name and not last_name:
+        full_name = str(claims.get('name') or claims.get('display_name') or '').strip()
+        if full_name:
+            first_name, _, last_name = full_name.partition(' ')
+            first_name = first_name[:150]
+            last_name = last_name.strip()[:150]
     school_slug = str(claims.get('school_slug') or claims.get('school') or '')[:100]
 
     # BMK SSO users default to VIEWER role
@@ -79,6 +87,10 @@ def user_from_bmk_claims(claims: dict) -> User:
     user.bmk_username = username
     user.bmk_school_slug = school_slug
     user.email = email
+    if first_name:
+        user.first_name = first_name
+    if last_name:
+        user.last_name = last_name
     user.role = User.Role.VIEWER
 
     class_ids = claims.get('class_ids') or claims.get('classIds') or []

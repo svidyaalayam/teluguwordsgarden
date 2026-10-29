@@ -14,6 +14,9 @@ import { PdfPreview } from '../varnamala/components/PdfPreview'
 import { PronunciationButton } from '../varnamala/components/PronunciationButton'
 import { aWordExamples } from '../varnamala/data/teluguWordExamples'
 import { hindiCharacters } from '../varnamala/data/hindiCharacters'
+import { consonantStem, deadConsonant, gunintalu, makeGunintam } from '../varnamala/data/gunintalu'
+import { GunintaluWorksheet } from '../varnamala/components/GunintaluWorksheet'
+import { OttuluWorksheet } from '../varnamala/components/OttuluWorksheet'
 import type { TraceAttempt } from '../varnamala/types/trace'
 
 export default function VarnamalaPage() {
@@ -27,6 +30,11 @@ export default function VarnamalaPage() {
   const [targetCount, setTargetCount] = useState(5)
   const [traceAttempts, setTraceAttempts] = useState<TraceAttempt[]>([])
   const [showPrintableWorksheet, setShowPrintableWorksheet] = useState(false)
+  const [showGunintaluWorksheet, setShowGunintaluWorksheet] = useState(false)
+  const [showOttuluWorksheet, setShowOttuluWorksheet] = useState(false)
+  const [selectedGunintaluId, setSelectedGunintaluId] = useState('ka')
+  const [selectedOttuluId, setSelectedOttuluId] = useState('ka')
+  const [selectedSection, setSelectedSection] = useState<'vowels' | 'consonants' | 'gunintalu' | 'ottulu'>('vowels')
   const [worksheetColumns, setWorksheetColumns] = useState(3)
   const [worksheetRows, setWorksheetRows] = useState(4)
   const [manualName, setManualName] = useState(() => sessionStorage.getItem('varna_manual_name') || '')
@@ -36,6 +44,9 @@ export default function VarnamalaPage() {
   const vowelIds = new Set(['a', 'aa', 'i', 'ii', 'u', 'uu', 'ru', 'ruu', 'lu', 'luu', 'e', 'ee', 'ai', 'o', 'oo', 'au', 'am', 'aha'])
   const vowels = characters.filter((item) => vowelIds.has(item.id))
   const consonants = characters.filter((item) => !vowelIds.has(item.id))
+  const selectedGunintalu = consonants.find((item) => item.id === selectedGunintaluId) ?? consonants[0]
+  const selectedOttulu = consonants.find((item) => item.id === selectedOttuluId) ?? consonants[0]
+  const importantOttuluLetters = new Set(['క', 'త', 'న', 'మ', 'య', 'ర', 'ల', 'వ'])
   const categoryLabels = {
     telugu: { vowels: 'అచ్చులు', consonants: 'హల్లులు' },
     hindi: { vowels: 'स्वर', consonants: 'व्यंजन' },
@@ -49,6 +60,11 @@ export default function VarnamalaPage() {
     setMode('learn')
     setPlaying(false)
     setTraceAttempts([])
+    setShowGunintaluWorksheet(false)
+    setShowOttuluWorksheet(false)
+    setSelectedGunintaluId('ka')
+    setSelectedOttuluId('ka')
+    setSelectedSection('vowels')
     setAudioRequest((request) => request + 1)
   }
 
@@ -71,6 +87,22 @@ export default function VarnamalaPage() {
     setAudioRequest((request) => request + 1)
   }
 
+  const selectSection = (section: 'vowels' | 'consonants' | 'gunintalu' | 'ottulu') => {
+    setSelectedSection(section)
+    setPlaying(false)
+    setTraceAttempts([])
+    if (section === 'vowels') {
+      setSelectedIndex(0)
+    } else if (section === 'consonants') {
+      const firstConsonantIndex = characters.findIndex((item) => item.id === 'ka')
+      setSelectedIndex(firstConsonantIndex >= 0 ? firstConsonantIndex : vowels.length)
+    } else if (section === 'gunintalu') {
+      setSelectedGunintaluId('ka')
+    } else {
+      setSelectedOttuluId('ka')
+    }
+  }
+
   const nextCharacter = () => {
     setSelectedIndex((index) => Math.min(index + 1, characters.length - 1))
     setMode('learn')
@@ -89,6 +121,14 @@ export default function VarnamalaPage() {
 
   if (showPrintableWorksheet) {
     return <div className="varnamala-page"><Header /><PrintableWorksheet lesson={activeLesson} userName={userName} columns={worksheetColumns} rows={worksheetRows} onClose={() => setShowPrintableWorksheet(false)} /></div>
+  }
+
+  if (showGunintaluWorksheet && selectedGunintalu) {
+    return <div className="varnamala-page"><Header /><GunintaluWorksheet consonant={selectedGunintalu.glyph} consonantTransliteration={selectedGunintalu.transliteration} userName={userName} onClose={() => setShowGunintaluWorksheet(false)} /></div>
+  }
+
+  if (showOttuluWorksheet && selectedOttulu) {
+    return <div className="varnamala-page"><Header /><OttuluWorksheet joinedConsonant={selectedOttulu} consonants={consonants} userName={userName} onClose={() => setShowOttuluWorksheet(false)} /></div>
   }
 
   return (
@@ -146,8 +186,8 @@ export default function VarnamalaPage() {
           <span className="set-label">{language === 'hindi' ? 'Hindi · हिन्दी' : 'Telugu · తెలుగు'}</span>
         </div>
         <div className="letter-sessions">
-          <details className="letter-session" open>
-            <summary>
+          <details className="letter-session" open={selectedSection === 'vowels'}>
+            <summary onClick={(event) => { event.preventDefault(); selectSection('vowels') }}>
               <span><strong>{categoryLabels.vowels}</strong><small>Vowels</small></span>
               <span className="session-chevron">⌄</span>
             </summary>
@@ -158,8 +198,8 @@ export default function VarnamalaPage() {
               })}
             </div>
           </details>
-          <details className="letter-session">
-            <summary>
+          <details className="letter-session" open={selectedSection === 'consonants'}>
+            <summary onClick={(event) => { event.preventDefault(); selectSection('consonants') }}>
               <span><strong>{categoryLabels.consonants}</strong><small>Consonants</small></span>
               <span className="session-chevron">⌄</span>
             </summary>
@@ -170,10 +210,101 @@ export default function VarnamalaPage() {
               })}
             </div>
           </details>
+          {language === 'telugu' && selectedGunintalu && (
+            <details className="letter-session gunintalu-session" open={selectedSection === 'gunintalu'}>
+              <summary onClick={(event) => { event.preventDefault(); selectSection('gunintalu') }}>
+                <span><strong>గుణింతాలు</strong><small>Vowel signs</small></span>
+                <span className="session-chevron">⌄</span>
+              </summary>
+              <div className="gunintalu-panel">
+                <p className="gunintalu-intro">Choose a హల్లు to see how it changes with every అచ్చు.</p>
+                <div className="character-grid gunintalu-consonant-grid">
+                  {consonants.map((item) => (
+                    <button
+                      className={`character-card ${item.id === selectedGunintalu.id ? 'selected' : ''}`}
+                      type="button"
+                      aria-pressed={item.id === selectedGunintalu.id}
+                      onClick={() => setSelectedGunintaluId(item.id)}
+                      key={item.id}
+                    >
+                      <span className="character-glyph">{item.glyph}</span>
+                      <span className="character-name">{item.transliteration}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="gunintalu-table-wrap">
+                  <h3 lang="te">{selectedGunintalu.glyph} గుణింతాలు</h3>
+                  <table className="gunintalu-table">
+                    <thead><tr><th>హల్లు</th><th>అచ్చు</th><th>గుణింతం</th></tr></thead>
+                    <tbody>
+                      {gunintalu.map(({ vowel, sign, transliteration }) => (
+                        <tr key={vowel}>
+                          <td><span className="gunintalu-script-line" lang="te">{deadConsonant(selectedGunintalu.glyph)}</span><span className="gunintalu-transliteration-line">{consonantStem(selectedGunintalu.transliteration)}</span></td>
+                          <td><span className="gunintalu-script-line" lang="te">+ {vowel}</span><span className="gunintalu-transliteration-line">+ {transliteration}</span></td>
+                          <td><span className="gunintalu-script-line" lang="te">= <strong>{makeGunintam(selectedGunintalu.glyph, sign)}</strong></span><span className="gunintalu-transliteration-line">= {consonantStem(selectedGunintalu.transliteration)}{transliteration}</span></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="gunintalu-worksheet-actions">
+                  <button className="worksheet-link" type="button" onClick={() => setShowGunintaluWorksheet(true)}>Print practice worksheet ↗</button>
+                </div>
+              </div>
+            </details>
+          )}
+          {language === 'telugu' && selectedOttulu && (
+            <details className="letter-session ottulu-session" open={selectedSection === 'ottulu'}>
+              <summary onClick={(event) => { event.preventDefault(); selectSection('ottulu') }}>
+                <span><strong>ఒత్తులు</strong><small>Joined consonants</small></span>
+                <span className="session-chevron">⌄</span>
+              </summary>
+              <div className="gunintalu-panel">
+                <p className="gunintalu-intro">Choose a హల్లు to see how it joins with every హల్లు. The letters క త న మ య ర ల వ will change their basic shape while joining with other letters. So practice them more.</p>
+                <div className="character-grid gunintalu-consonant-grid">
+                  {consonants.map((item) => (
+                    <button
+                      className={`character-card ${importantOttuluLetters.has(item.glyph) ? 'ottulu-important' : ''} ${item.id === selectedOttulu.id ? 'selected' : ''}`}
+                      type="button"
+                      aria-pressed={item.id === selectedOttulu.id}
+                      onClick={() => setSelectedOttuluId(item.id)}
+                      key={item.id}
+                    >
+                      <span className="character-glyph">{item.glyph}</span>
+                      <span className="character-name">{item.transliteration}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="gunintalu-table-wrap">
+                  <h3 lang="te">{selectedOttulu.glyph} ఒత్తులు</h3>
+                  <table className="gunintalu-table ottulu-table">
+                    <thead><tr><th>హల్లు</th><th>కలయిక</th><th>ఒత్తు</th></tr></thead>
+                    <tbody>
+                      {consonants.map((consonant) => {
+                        const sourceStem = consonantStem(consonant.transliteration)
+                        const joined = `${consonant.glyph}్${selectedOttulu.glyph}`
+                        const transliteration = `${sourceStem}${selectedOttulu.transliteration}`
+                        return (
+                          <tr key={consonant.id}>
+                            <td><span className="gunintalu-script-line" lang="te">{deadConsonant(consonant.glyph)}</span><span className="gunintalu-transliteration-line">{sourceStem}</span></td>
+                            <td><span className="gunintalu-script-line" lang="te">+ {selectedOttulu.glyph}</span><span className="gunintalu-transliteration-line">+ {selectedOttulu.transliteration}</span></td>
+                            <td><span className="gunintalu-script-line" lang="te">= <strong>{joined}</strong></span><span className="gunintalu-transliteration-line">= {transliteration}</span></td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="gunintalu-worksheet-actions">
+                  <button className="worksheet-link" type="button" onClick={() => setShowOttuluWorksheet(true)}>Print ఒత్తులు practice worksheet ↗</button>
+                </div>
+              </div>
+            </details>
+          )}
         </div>
       </section>
 
-      <section className="lesson-area">
+      {selectedSection !== 'gunintalu' && selectedSection !== 'ottulu' && <section className="lesson-area">
         <div className="worksheet-controls">
           <div className="worksheet-size">
             <label>
@@ -257,9 +388,9 @@ export default function VarnamalaPage() {
           )
         )}
         {activeLesson.pdfUrl && <PdfPreview url={activeLesson.pdfUrl} title={activeLesson.glyph} />}
-      </section>
+      </section>}
 
-      {language === 'telugu' && activeLesson.id === 'a' && <WordExamples words={aWordExamples} />}
+      {selectedSection === 'vowels' && language === 'telugu' && activeLesson.id === 'a' && <WordExamples words={aWordExamples} />}
 
       <footer>Made for curious little writers <span>•</span> తెలుగు నేర్చుకుందాం</footer>
       </main>

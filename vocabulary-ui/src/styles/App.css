@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700;800&display=swap');
+
 :root {
   --bg: #0f2f28;
   --bg-soft: #163d34;
@@ -8,7 +10,7 @@
   --accent-dark: #145743;
   --danger: #9b2c2c;
   --border: #d5e0db;
-  font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+  font-family: "Segoe UI", "Noto Sans Telugu", "Nirmala UI", Gautami, sans-serif;
   line-height: 1.5;
   color: var(--ink);
   background:
@@ -822,6 +824,15 @@ html[data-language="sa"] .platform-highlight {
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
+  color: var(--ink);
+}
+
+.vocabulary-hero-header p:not(.brand) {
+  color: var(--muted);
+}
+
+.vocabulary-hero-header h1 {
+  color: var(--ink);
 }
 
 .vocabulary-quick-stats {
@@ -830,8 +841,8 @@ html[data-language="sa"] .platform-highlight {
 }
 
 .quick-stat-item {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #ffffff;
+  border: 1px solid #cfe4de;
   border-radius: 14px;
   padding: 8px 18px;
   text-align: center;
@@ -842,13 +853,13 @@ html[data-language="sa"] .platform-highlight {
   display: block;
   font-size: 1.4rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--accent-dark);
   line-height: 1.1;
 }
 
 .quick-stat-label {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--muted);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -863,7 +874,8 @@ html[data-language="sa"] .platform-highlight {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.15);
+  background: #e8f3ed;
+  border: 1px solid #cfe4de;
   padding: 6px;
   border-radius: 16px;
   backdrop-filter: blur(8px);
@@ -877,7 +889,7 @@ html[data-language="sa"] .platform-highlight {
   border-radius: 12px;
   border: none;
   background: transparent;
-  color: #fff;
+  color: var(--accent-dark);
   font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
@@ -885,7 +897,7 @@ html[data-language="sa"] .platform-highlight {
 }
 
 .vocabulary-mode-tab:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: #dcefe5;
 }
 
 .vocabulary-mode-tab.active {
@@ -908,8 +920,8 @@ html[data-language="sa"] .platform-highlight {
 }
 
 .vocabulary-mode-tab:not(.active) .tab-count-pill {
-  background: rgba(255, 255, 255, 0.25);
-  color: #fff;
+  background: #cde7da;
+  color: #145743;
 }
 
 .tab-badge-new {
@@ -2084,8 +2096,17 @@ html[data-language="sa"] .platform-highlight {
 /* Telugu Script Typography & Word Garden Enhancements */
 .telugu-script {
   font-family: "Noto Sans Telugu", "Nirmala UI", Gautami, sans-serif;
-  letter-spacing: 0.02em;
-  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.5;
+  font-synthesis: none;
+}
+
+:lang(te) {
+  font-family: "Noto Sans Telugu", "Nirmala UI", Gautami, sans-serif;
+  letter-spacing: 0;
+  line-height: 1.5;
+  font-synthesis: none;
 }
 
 .word-card-transliteration {
@@ -3363,7 +3384,7 @@ button.class-tab.active:hover {
 }
 
 .dash-header.compact h1 {
-  color: white;
+  color: Black;
 }
 
 .page-center {
@@ -5177,8 +5198,11 @@ th {
   color: #0f172a;
 }
 
-.vp-brand-icon {
-  font-size: 1.8rem;
+.vp-brand-logo {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  object-fit: contain;
 }
 
 .vp-brand-text {
@@ -5187,8 +5211,9 @@ th {
 }
 
 .vp-brand-text strong {
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-family: Literata, "Segoe UI", serif;
+  font-size: 1.3rem;
+  font-weight: 800;
   color: #0d9488;
   line-height: 1.2;
 }
@@ -5196,7 +5221,7 @@ th {
 .vp-brand-sub {
   font-size: 0.8rem;
   color: #64748b;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .vp-header-actions {
@@ -5228,6 +5253,10 @@ th {
 }
 
 .learning-home {
+  background: linear-gradient(155deg, #effcf7 0%, #f8fafc 50%, #eaf6ff 100%);
+}
+
+.vocabulary-shell {
   background: linear-gradient(155deg, #effcf7 0%, #f8fafc 50%, #eaf6ff 100%);
 }
 
@@ -5385,8 +5414,8 @@ th {
   align-items: center;
   gap: 10px;
   background: #f1f5f9;
-  padding: 4px 6px 4px 12px;
-  border-radius: 20px;
+  padding: 4px 6px 4px 14px;
+  border-radius: 999px;
   border: 1px solid #e2e8f0;
 }
 
@@ -5399,14 +5428,26 @@ th {
   gap: 6px;
 }
 
-.vp-badge-bmk {
-  background: #0d9488;
-  color: #fff;
-  font-size: 0.7rem;
+.vp-user-name {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vp-user-avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #3aa882, #1f7a5c);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+  color: #ffffff;
   font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 6px;
-  letter-spacing: 0.5px;
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
 }
 
 .btn-back-bmk {
