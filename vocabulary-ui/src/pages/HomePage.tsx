@@ -32,6 +32,12 @@ export default function HomePage() {
             <p>Read textbooks, stories, epics, satakams and printable worksheets in one place.</p>
             <Link className="home-btn" to="/resources">Browse resources</Link>
           </article>
+          <article className="learning-home-card">
+            <span className="learning-home-icon">📝</span>
+            <h2>Exams</h2>
+            <p>Test your Telugu knowledge with interactive multiple-choice examinations.</p>
+            <Link className="home-btn" to="/exam/level-1-achulu">Take Level 1 Exam</Link>
+          </article>
         </section>
       </main>
     </div>

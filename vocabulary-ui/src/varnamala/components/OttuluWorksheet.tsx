@@ -19,10 +19,13 @@ export function OttuluWorksheet({ joinedConsonant, consonants, userName, onClose
       </div>
       <article className="printable-sheet">
         <header className="printable-header">
-          <div>
-            <p className="worksheet-kicker">బాలముకుందము · ఒత్తులు</p>
-            <h1>Practise {joinedConsonant.glyph} ఒత్తులు</h1>
-            <p>Read the joined letters, copy the model, then keep practising across the row.</p>
+          <div className="printable-header-main">
+            <img src="/bmk-logo.png" alt="Balamukundam" className="worksheet-logo" width={56} height={56} />
+            <div>
+              <p className="worksheet-kicker">బాలముకుందము · ఒత్తులు</p>
+              <h1>Practise {joinedConsonant.glyph} ఒత్తులు</h1>
+              <p>Read the joined letters, copy the model, then keep practising across the row.</p>
+            </div>
           </div>
           <div className="printable-glyph">{joinedConsonant.glyph}</div>
         </header>

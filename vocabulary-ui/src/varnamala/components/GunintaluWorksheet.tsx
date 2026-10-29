@@ -17,10 +17,13 @@ export function GunintaluWorksheet({ consonant, consonantTransliteration, userNa
       </div>
       <article className="printable-sheet">
         <header className="printable-header">
-          <div>
-            <p className="worksheet-kicker">బాలముకుందము · గుణింతాలు</p>
-            <h1>Practise {consonant} గుణింతాలు</h1>
-            <p>Read the equation, copy the model letter, then keep practising across the row.</p>
+          <div className="printable-header-main">
+            <img src="/bmk-logo.png" alt="Balamukundam" className="worksheet-logo" width={56} height={56} />
+            <div>
+              <p className="worksheet-kicker">బాలముకుందము · గుణింతాలు</p>
+              <h1>Practise {consonant} గుణింతాలు</h1>
+              <p>Read the equation, copy the model letter, then keep practising across the row.</p>
+            </div>
           </div>
           <div className="printable-glyph">{consonant}</div>
         </header>

@@ -24,10 +24,13 @@ export function WorksheetCertificate({
       </div>
       <article className="worksheet">
         <header className="worksheet-header">
-          <div>
-            <p className="worksheet-kicker">బాలముకుందము · వర్ణమాల</p>
-            <h1 id="worksheet-title">My tracing worksheet</h1>
-            <p>Wonderful work! I practised this letter {targetCount} times.</p>
+          <div className="worksheet-header-main">
+            <img src="/bmk-logo.png" alt="Balamukundam" className="worksheet-logo" width={56} height={56} />
+            <div>
+              <p className="worksheet-kicker">బాలముకుందము · వర్ణమాల</p>
+              <h1 id="worksheet-title">My tracing worksheet</h1>
+              <p>Wonderful work! I practised this letter {targetCount} times.</p>
+            </div>
           </div>
           <div className="worksheet-badge">✓<span>Done!</span></div>
         </header>

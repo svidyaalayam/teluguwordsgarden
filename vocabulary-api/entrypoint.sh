@@ -34,6 +34,7 @@ python manage.py collectstatic --noinput
 if [ "${SEED_ON_START:-true}" = "true" ]; then
   python manage.py seed_word_garden || echo "WARNING: seed_word_garden failed; continuing startup."
   python manage.py expand_vocabulary || echo "WARNING: expand_vocabulary failed; continuing startup."
+  python manage.py seed_exam || echo "WARNING: seed_exam failed; continuing startup."
 fi
 
 exec gunicorn config.wsgi:application \

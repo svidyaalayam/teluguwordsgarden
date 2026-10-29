@@ -49,6 +49,7 @@ services:
         VITE_BMK_APP_URL: ${VITE_BMK_APP_URL:-http://localhost:8080}
         VITE_BMK_APP_DOMAIN: ${VITE_BMK_APP_DOMAIN:-localhost}
         VITE_API_URL: ${VITE_API_URL:-http://localhost:8300}
+        VITE_EXAM_USE_MOCK: ${VITE_EXAM_USE_MOCK:-false}
     ports:
       - '${WEB_PORT:-8380}:80'
     depends_on:

@@ -297,6 +297,9 @@
 .varnamala-page .printable-actions{ display:flex; justify-content:space-between; gap:12px; width:min(960px,100%); margin:0 auto 18px; }
 .varnamala-page .printable-sheet{ width:min(960px,100%); margin:0 auto; padding:30px; border:8px double #b8d5c8; border-radius:8px; background:#fff; box-shadow:0 14px 34px rgba(0,0,0,.12); }
 .varnamala-page .printable-header{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; padding-bottom:16px; border-bottom:2px dashed #b8d5c8; }
+.varnamala-page .printable-header-main,
+.varnamala-page .worksheet-header-main{ display:flex; align-items:center; gap:16px; }
+.varnamala-page .worksheet-logo{ width:56px; height:56px; object-fit:contain; flex-shrink:0; border-radius:8px; }
 .varnamala-page .printable-header h1{ margin:0 0 5px; color:var(--ink); font-size:clamp(1.7rem,4vw,2.5rem); }
 .varnamala-page .printable-header p:not(.worksheet-kicker){ margin:0; color:var(--muted); }
 .varnamala-page .printable-glyph{ color:var(--accent); font-family:"Noto Sans Telugu",sans-serif; font-size:76px; line-height:1; }

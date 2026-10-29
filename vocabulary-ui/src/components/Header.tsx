@@ -52,6 +52,7 @@ export default function Header() {
           <NavLink to="/varnamala">Varnamala</NavLink>
           <NavLink to="/word-garden">Word Garden</NavLink>
           <NavLink to="/resources">Resources</NavLink>
+          <NavLink to="/exam/level-1-achulu">Exams</NavLink>
         </nav>
 
         <div className="vp-header-actions">

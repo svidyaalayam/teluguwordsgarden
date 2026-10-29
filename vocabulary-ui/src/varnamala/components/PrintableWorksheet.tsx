@@ -26,10 +26,13 @@ export function PrintableWorksheet({ lesson, userName, columns, rows, onClose }:
       </div>
       <article className="printable-sheet">
         <header className="printable-header">
-          <div>
-            <p className="worksheet-kicker">బాలముకుందము · వర్ణమాల</p>
-            <h1>Write the letter {lesson.glyph}</h1>
-            <p>Trace the dots first, then try writing it by yourself.</p>
+          <div className="printable-header-main">
+            <img src="/bmk-logo.png" alt="Balamukundam" className="worksheet-logo" width={56} height={56} />
+            <div>
+              <p className="worksheet-kicker">బాలముకుందము · వర్ణమాల</p>
+              <h1>Write the letter {lesson.glyph}</h1>
+              <p>Trace the dots first, then try writing it by yourself.</p>
+            </div>
           </div>
           <div className="printable-glyph">{lesson.glyph}</div>
         </header>
